@@ -3,6 +3,8 @@ require 'sinatra/activerecord'
 require_relative './models/restaurant'
 require 'json'
 
+set :database_file, "./config/database.yml"
+
 post '/restaurants' do
 	@restaurant = Restaurants.new
 	@restaurant.location = params[:location]
@@ -26,7 +28,6 @@ end
 get '/restaurants/:id' do
   @restaurant = Restaurants.find_by_id(params[:id]).to_json
 end
-
 
 delete '/restaurants/:id' do
 	@restaurant = Restaurants.find_by_id(params[:id])
