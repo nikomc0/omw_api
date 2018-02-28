@@ -1,9 +1,8 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require './config/database'
 require_relative './models/restaurant'
 require 'json'
-
-set :database_file, "./config/database.yml"
 
 post '/restaurants' do
 	@restaurant = Restaurants.new
