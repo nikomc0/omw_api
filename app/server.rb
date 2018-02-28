@@ -3,14 +3,6 @@ require 'sinatra/activerecord'
 require_relative './models/restaurant'
 require 'json'
 
-configure :development do
-  set :database, {adapter: 'postgresql',  encoding: 'unicode', database: 'omw', pool: 2, username: 'nikomc0', password: ''}
-end
-
-before do
-  content_type :json
-end
-
 post '/restaurants' do
 	@restaurant = Restaurants.new
 	@restaurant.location = params[:location]
