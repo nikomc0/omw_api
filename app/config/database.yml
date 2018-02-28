@@ -1,0 +1,27 @@
+development:
+ adapter: postgresql
+ encoding: unicode
+ database: omw
+ host: localhost
+ username: nikomc0
+ password:
+ port: 5432
+
+test:
+ adapter: postgresql
+ encoding: unicode
+ database: test
+ pool: 5
+ host: localhost
+ username: 
+ password:
+ port: 5432
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: <%= ENV['DATABASE_HOST'] %>
+  database: <%= ENV['DATABASE_NAME'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
