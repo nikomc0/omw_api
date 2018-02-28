@@ -18,7 +18,7 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     mustermann (1.0.2)
-    pg (1.0.0)
+    pg (0.20.0)
     rack (2.0.4)
     rack-protection (2.0.1)
       rack
@@ -42,7 +42,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
-  pg
+  pg (= 0.20)
   rake
   sinatra
   sinatra-activerecord
