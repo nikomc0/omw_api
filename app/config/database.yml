@@ -16,3 +16,8 @@ test:
  username: 
  password:
  port: 5432
+
+
+production:
+  <<: *default
+  database: db/production.sqlite3
