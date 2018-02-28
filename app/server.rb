@@ -4,6 +4,8 @@ require_relative './config/database'
 require_relative './models/restaurant'
 require 'json'
 
+ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/omw')
+
 post '/restaurants' do
 	@restaurant = Restaurants.new
 	@restaurant.location = params[:location]
