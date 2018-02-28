@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'sinatra/activerecord'
-require './models/restaurant'
+require_relative './models/restaurant'
 require 'json'
 
 configure :development do
