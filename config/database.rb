@@ -1,10 +1,10 @@
 configure :development, :test do
-  set :database, 'sqlite3://development.db'
+  set :database, 'postgres://localhost/omw'
 end
  
 configure :production do
   # Database connection
-  db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+  db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/omw')
  
   ActiveRecord::Base.establish_connection(
     :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,

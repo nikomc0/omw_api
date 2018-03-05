@@ -2,12 +2,13 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require './config/database'
 require_relative './models/restaurant'
+require_relative './models/reservation'
 require 'json'
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/omw')
 
 post '/restaurants' do
-	@restaurant = Restaurants.new
+	@restaurant = Restaurant.new
 	@restaurant.location = params[:location]
 	@restaurant.name = params[:name]
 
@@ -23,15 +24,21 @@ get '/' do
 end
 
 get '/restaurants' do 
-	@restaurants = Restaurants.all.to_json
+	@restaurants
 end
 
 get '/restaurants/:id' do
-  @restaurant = Restaurants.find_by_id(params[:id]).to_json
+  @restaurant = Restaurant.find_by_id(params[:id])
+  @restaurant.reservations.to_json
+end
+
+put '/restaurants/:id' do
+	@restaurant = Restaurant.find_by_id(params[:id])
+	puts @restaurant.waitlist == false
 end
 
 delete '/restaurants/:id' do
-	@restaurant = Restaurants.find_by_id(params[:id])
+	@restaurant = Restaurant.find_by_id(params[:id])
 
 	if !@restaurant
 		no_data!
