@@ -4,8 +4,8 @@ class RestaurantsController < Sinatra::Base
 		@restaurants = Restaurant.all.to_json
 	end
 
-	get '/restaurants/:id' do
-	  @restaurant = Restaurant.find_by_id(params[:id])
+	get '/restaurants/:location' do
+	  @restaurant = Restaurant.find_by_id(params[:location])
  		@restaurant.reservations.to_json
 	end
 
