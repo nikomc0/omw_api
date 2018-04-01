@@ -1,10 +1,15 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'sinatra/cross_origin'
 require './config/database'
 require_relative './models/restaurant'
 require 'json'
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/omw')
+
+configure do
+  enable :cross_origin
+end
 
 post '/restaurants' do
 	@restaurant = Restaurants.new
