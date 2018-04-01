@@ -1,4 +1,6 @@
 require './app'
 
-run Sinatra::Application
 register Sinatra::CrossOrigin
+enable :cross_origin
+
+run Sinatra::Application
