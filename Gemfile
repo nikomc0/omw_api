@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'activerecord'
 gem 'sinatra-activerecord' # excellent gem that ports ActiveRecord for Sinatra
 gem 'rake'
+gem "sinatra-cross_origin", "~> 0.3.1"
  
 group :development, :test do
   gem 'sqlite3'
