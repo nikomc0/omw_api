@@ -1,3 +1,3 @@
-class Restaurants < ActiveRecord::Base
-
+class Restaurant < ActiveRecord::Base
+	has_many :reservations
 end

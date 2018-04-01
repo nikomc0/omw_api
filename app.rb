@@ -3,10 +3,12 @@ require 'sinatra/activerecord'
 require 'sinatra/cross_origin'
 require './config/database'
 require_relative './models/restaurant'
+require_relative './models/reservation'
 require 'json'
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/omw')
 
+<<<<<<< HEAD
 configure do
   enable :cross_origin
 end
@@ -23,25 +25,14 @@ post '/restaurants' do
 	end
 end
 
+=======
+>>>>>>> users
 get '/' do
 	'Welcome to On My Waitlist'
 end
 
-get '/restaurants' do 
-	@restaurants = Restaurants.all.to_json
+put '/restaurants/:id' do
+	@restaurant = Restaurant.find_by_id(params[:id])
+	puts @restaurant.waitlist == false
 end
 
-get '/restaurants/:id' do
-  @restaurant = Restaurants.find_by_id(params[:id]).to_json
-end
-
-delete '/restaurants/:id' do
-	@restaurant = Restaurants.find_by_id(params[:id])
-
-	if !@restaurant
-		no_data!
-	else
-		@restaurant.destroy
-	end
-	"deleted"
-end
