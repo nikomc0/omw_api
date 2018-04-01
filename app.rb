@@ -8,25 +8,6 @@ require 'json'
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/omw')
 
-<<<<<<< HEAD
-configure do
-  enable :cross_origin
-end
-
-post '/restaurants' do
-	@restaurant = Restaurants.new
-	@restaurant.location = params[:location]
-	@restaurant.name = params[:name]
-
-	if @restaurant.save
-		@restaurant.to_json
-	else
-		no_data!
-	end
-end
-
-=======
->>>>>>> users
 get '/' do
 	'Welcome to On My Waitlist'
 end
