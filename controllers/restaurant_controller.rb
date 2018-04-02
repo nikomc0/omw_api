@@ -1,5 +1,4 @@
 class RestaurantsController < Sinatra::Base
-
 	get '/restaurants' do 
 		@restaurants = Restaurant.all.to_json
 	end
