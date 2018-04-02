@@ -1,4 +1,13 @@
+require 'sinatra/cross_origin'
+
 class RestaurantsController < Sinatra::Base
+	configure do
+	  enable :cross_origin
+	end
+
+	before do
+	  response.headers['Access-Control-Allow-Origin'] = '*'
+	end
 	get '/restaurants' do 
 		@restaurants = Restaurant.all.to_json
 	end
