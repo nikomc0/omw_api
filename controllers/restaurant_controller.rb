@@ -6,13 +6,29 @@ class RestaurantsController < Sinatra::Base
 	end
 
 	before do
+  if request.request_method == 'OPTIONS'
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "DELETE"
+    halt 200
+  end
 	  response.headers['Access-Control-Allow-Origin'] = '*'
 	end
+
 	get '/restaurants' do 
 		@restaurants = Restaurant.all.to_json
 	end
 
-	get '/restaurants/:id' do
+	get '/locations' do
+		@locations = Restaurant.pluck(:location)
+		@locations.uniq.to_json
+	end
+
+	get '/restaurants/:location' do
+		@restaurant = Restaurant.where(location: params[:location])
+		@restaurant.to_json
+	end 
+
+	get '/reservations/:id' do
 	  @restaurant = Restaurant.find_by_id(params[:id])
  		@restaurant.reservations.to_json
 	end
@@ -38,12 +54,12 @@ class RestaurantsController < Sinatra::Base
 			"no_data!"
 		else
 			@reservation.save
-			@restaurant.reservations.to_json
+			@reservation.to_json
 		end
 	end
 
-	delete '/restaurants/:id' do
-		@restaurant = Restaurant.find_by_id(params[:id])
+	delete '/reservations/:restaurantID/:id' do
+		@restaurant = Restaurant.find_by_id(params[:restaurantID])
 		@reservation = @restaurant.reservations.find_by_id(params[:id])
 		
 		if !@reservation
@@ -51,6 +67,6 @@ class RestaurantsController < Sinatra::Base
 		else
 			@reservation.destroy
 		end
-		"deleted"
+		"deleted" + @reservation.to_json
 	end
 end
