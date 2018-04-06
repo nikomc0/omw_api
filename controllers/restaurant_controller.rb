@@ -50,13 +50,23 @@ class RestaurantsController < Sinatra::Base
 		@reservation = @restaurant.reservations.new
 		@reservation.name = params[:name]
 
-		if !@reservation.name
-			"no_data!"
+		if Reservation.exists?(name: @reservation.name)
+			@exists = {
+				message: "Reservation already exits"
+			}
+
+			@exists.to_json
+
 		else
 			@reservation.save
 			@reservation.to_json
 		end
 	end
+
+	# put '/restaurants/:id' do
+	# 	@restaurant = Restaurant.find_by_id(params[:id])
+	# 	puts @restaurant.waitlist == false
+	# end
 
 	delete '/reservations/:restaurantID/:id' do
 		@restaurant = Restaurant.find_by_id(params[:restaurantID])

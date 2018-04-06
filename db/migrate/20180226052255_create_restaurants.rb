@@ -5,8 +5,4 @@ class CreateRestaurants < ActiveRecord::Migration[5.1]
   		t.string :name
   	end
   end
-
-  def down
-  	drop_table :restaurants
-  end
 end
