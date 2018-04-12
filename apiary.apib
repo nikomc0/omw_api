@@ -1,0 +1,52 @@
+FORMAT: 1A
+HOST: https://frozen-headland-47849.herokuapp.com
+
+# OnMyWaitlist_API
+
+OMW allows users to view, add, and delete restaurants.
+
+## Restaurants Collection [/restaurants]
+
+### List All Restaurants [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "location": "San Francisco",
+                "name": "Dominick",
+            }
+        ]
+
+### CREATE Individual Restaurant [POST]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "location": "San Francisco",
+                "name": "Test Restaurant"
+            }
+        ]
+
+## Individual Restaurant [/restaurants/1]
+### GET Individual Restaurant [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+            }
+        ]
+        
+### DELETE Individual Restaurant [DELETE]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1
+            }
+        ]
