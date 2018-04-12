@@ -1,4 +1,5 @@
 require 'sinatra/cross_origin'
+require 'pry'
 
 class RestaurantsController < Sinatra::Base
 	configure do
@@ -35,13 +36,20 @@ class RestaurantsController < Sinatra::Base
 
 	post '/restaurants' do
 		@restaurant = Restaurant.new
-		@restaurant.location = params[:location]
-		@restaurant.name = params[:name]
+		@restaurant.location = params[:location].capitalize
+		@restaurant.name = params[:name].capitalize
 
-		if @restaurant.save
-			@restaurant.to_json
+		if Restaurant.exists?(name: @restaurant.name, location: @restaurant.location)
+			@exists = {
+				message: "Restaurant already exists"
+			}
+			@exists.to_json
 		else
-			"no_data!"
+			if @restaurant.save
+				@restaurant.to_json
+			else
+				"no_data!"
+			end
 		end
 	end
 
@@ -68,6 +76,19 @@ class RestaurantsController < Sinatra::Base
 	# 	puts @restaurant.waitlist == false
 	# end
 
+	delete '/restaurants/' do
+		# binding.pry
+		@restaurant = Restaurant.find_by_id(params[:id])
+
+		if !@restaurant
+			"Sorry restaurant doesn't exist"
+		else
+			@restaurant.destroy
+		end
+
+		"Deleted" + @restaurant.to_json
+	end
+
 	delete '/reservations/:restaurantID/:id' do
 		@restaurant = Restaurant.find_by_id(params[:restaurantID])
 		@reservation = @restaurant.reservations.find_by_id(params[:id])
@@ -77,6 +98,7 @@ class RestaurantsController < Sinatra::Base
 		else
 			@reservation.destroy
 		end
+
 		"deleted" + @reservation.to_json
 	end
 end
