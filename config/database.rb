@@ -1,4 +1,4 @@
-configure :development, :test do
+configure :development do
   set :database, 'postgres://localhost/omw'
 end
  

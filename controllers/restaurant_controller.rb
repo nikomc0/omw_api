@@ -1,5 +1,4 @@
 require 'sinatra/cross_origin'
-require 'pry'
 
 class RestaurantsController < Sinatra::Base
 	configure do
@@ -29,15 +28,10 @@ class RestaurantsController < Sinatra::Base
 		@restaurant.to_json
 	end 
 
-	get '/reservations/:id' do
-	  @restaurant = Restaurant.find_by_id(params[:id])
- 		@restaurant.reservations.to_json
-	end
-
 	post '/restaurants' do
 		@restaurant = Restaurant.new
-		@restaurant.location = params[:location].capitalize
-		@restaurant.name = params[:name].capitalize
+		@restaurant.location = params[:location].split(" ").map{ |x| x.capitalize }.join(" ")
+		@restaurant.name = params[:name].split(" ").map{ |x| x.capitalize }.join(" ")
 
 		if Restaurant.exists?(name: @restaurant.name, location: @restaurant.location)
 			@exists = {
@@ -53,52 +47,17 @@ class RestaurantsController < Sinatra::Base
 		end
 	end
 
-	post '/restaurants/:id' do
-		@restaurant = Restaurant.find_by_id(params[:id])
-		@reservation = @restaurant.reservations.new
-		@reservation.name = params[:name]
-
-		if Reservation.exists?(name: @reservation.name)
-			@exists = {
-				message: "Reservation already exits"
-			}
-
-			@exists.to_json
-
-		else
-			@reservation.save
-			@reservation.to_json
-		end
-	end
-
-	# put '/restaurants/:id' do
-	# 	@restaurant = Restaurant.find_by_id(params[:id])
-	# 	puts @restaurant.waitlist == false
-	# end
-
 	delete '/restaurants/' do
-		# binding.pry
 		@restaurant = Restaurant.find_by_id(params[:id])
-
 		if !@restaurant
-			"Sorry restaurant doesn't exist"
+			@result = {
+				message: "Sorry restaurant doesn't exist"
+			}.to_json
 		else
 			@restaurant.destroy
+			@result = {
+				message: "#{@restaurant.name}Has been deleted"
+			}.to_json
 		end
-
-		"Deleted" + @restaurant.to_json
-	end
-
-	delete '/reservations/:restaurantID/:id' do
-		@restaurant = Restaurant.find_by_id(params[:restaurantID])
-		@reservation = @restaurant.reservations.find_by_id(params[:id])
-		
-		if !@reservation
-			"no_data!"
-		else
-			@reservation.destroy
-		end
-
-		"deleted" + @reservation.to_json
 	end
 end

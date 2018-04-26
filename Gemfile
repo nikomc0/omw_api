@@ -7,6 +7,9 @@ gem 'rake'
 gem 'sinatra-cross_origin'
  
 group :development, :test do
+	gem 'rspec'
+	gem 'coderay'
+	gem 'rack-test'
   gem 'sqlite3'
 	gem 'pry'
 end

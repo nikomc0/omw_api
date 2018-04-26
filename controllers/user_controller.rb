@@ -24,10 +24,17 @@ class UsersController < Sinatra::Base
 		@user.last_name = params[:last_name]
 		@user.phone_number = params[:phone_number]
 
-		if @user.save
-			@user.to_json
+		if User.exists?(phone_number: params[:phone_number])
+			@exists = {
+				message: "User already exists."
+			}
+			@exists.to_json
 		else
-			"User not created."
+			if @user.save
+				@user.to_json
+			else
+				"User not created."
+			end
 		end
 	end
 
