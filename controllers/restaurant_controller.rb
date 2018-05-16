@@ -15,17 +15,17 @@ class RestaurantsController < Sinatra::Base
 	end
 
 	get '/restaurants' do 
-		@restaurants = Restaurant.all.as_json
+		@restaurants = Restaurant.all.to_json
 	end
 
 	get '/locations' do
 		@locations = Restaurant.pluck(:location)
-		@locations.uniq.as_json
+		@locations.uniq.to_json
 	end
 
 	get '/restaurants/:location' do
 		@restaurant = Restaurant.where(location: params[:location])
-		@restaurant.as_json
+		@restaurant.to_json
 	end 
 
 	post '/restaurants' do
@@ -37,10 +37,10 @@ class RestaurantsController < Sinatra::Base
 			@exists = {
 				message: "Restaurant already exists"
 			}
-			@exists.as_json
+			@exists.to_json
 		else
 			if @restaurant.save
-				@restaurant.as_json
+				@restaurant.to_json
 			else
 				"no_data!"
 			end
@@ -52,12 +52,12 @@ class RestaurantsController < Sinatra::Base
 		if !@restaurant
 			@result = {
 				message: "Sorry restaurant doesn't exist"
-			}.as_json
+			}.to_json
 		else
 			@restaurant.destroy
 			@result = {
 				message: "#{@restaurant.name}Has been deleted"
-			}.as_json
+			}.to_json
 		end
 	end
 end
