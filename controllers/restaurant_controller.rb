@@ -8,11 +8,13 @@ class RestaurantsController < Sinatra::Base
 
 	before do
 		content_type :json
-  if request.request_method == 'OPTIONS'
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "DELETE"
-    halt 200
-  end
+
+	  if request.request_method == 'OPTIONS'
+	    response.headers["Access-Control-Allow-Origin"] = "*"
+	    response.headers["Access-Control-Allow-Methods"] = "DELETE"
+	    halt 200
+	  end
+	  
 	  response.headers['Access-Control-Allow-Origin'] = '*'
 	end
 
