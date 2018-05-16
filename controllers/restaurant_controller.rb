@@ -1,4 +1,5 @@
 require 'sinatra/cross_origin'
+require 'json'
 
 class RestaurantsController < Sinatra::Base
 	configure do
@@ -6,6 +7,7 @@ class RestaurantsController < Sinatra::Base
 	end
 
 	before do
+		content_type :json
   if request.request_method == 'OPTIONS'
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Methods"] = "DELETE"
@@ -15,6 +17,7 @@ class RestaurantsController < Sinatra::Base
 	end
 
 	get '/restaurants' do 
+		
 		@restaurants = Restaurant.all.to_json
 	end
 
