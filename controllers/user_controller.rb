@@ -1,4 +1,5 @@
 require 'sinatra/cross_origin'
+require 'json'
 
 class UsersController < Sinatra::Base
 	configure do
@@ -6,13 +7,15 @@ class UsersController < Sinatra::Base
 	end
 
 	before do
-  if request.request_method == 'OPTIONS'
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "DELETE"
-    halt 200
-  end
-	  response.headers['Access-Control-Allow-Origin'] = '*'
-	end
+		content_type :json
+
+  	if request.request_method == 'OPTIONS'
+    	response.headers["Access-Control-Allow-Origin"] = "*"
+    	response.headers["Access-Control-Allow-Methods"] = "DELETE"
+    	halt 200
+  	end
+	  	response.headers['Access-Control-Allow-Origin'] = '*'
+		end
 
 	get '/users' do 
 		@users = User.all.to_json

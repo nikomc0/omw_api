@@ -19,8 +19,12 @@ class RestaurantsController < Sinatra::Base
 	end
 
 	get '/restaurants' do 
-		
-		@restaurants = Restaurant.all.to_json
+		@restaurants = Restaurant.all
+		restaurants = {
+			Restaurants: "All Restaurants",
+			locations: @restaurants.map { |x| x}
+		}
+		restaurants.to_json
 	end
 
 	get '/locations' do
